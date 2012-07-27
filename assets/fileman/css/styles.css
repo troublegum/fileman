@@ -1,0 +1,49 @@
+body {
+	font-size: 11px;
+	font-family: Verdana, serif;
+}
+
+h2, h3 {
+	font-weight: 400;
+	margin-bottom: 15px;
+}
+
+#table td.center, #table th.center {
+	text-align: center;
+}
+
+#control-btn {
+	margin-bottom: 15px;
+}
+
+i.icon {
+	margin-right: 5px;
+}
+
+.pagination {
+	margin: 0;
+}
+
+.errorMessage {
+	color: #E00000;
+}
+
+#settings-form input[type=text] {
+	margin-bottom: 0;
+}
+
+#settings-form div.form-row {
+	margin-bottom: 5px;
+}
+
+#settings-form div.form-row-last {
+	margin-bottom: 0;
+}
+
+#settings-form span.required {
+	color: #E00000;
+}
+
+.modal h3 {
+	overflow-x: hidden; 
+}
