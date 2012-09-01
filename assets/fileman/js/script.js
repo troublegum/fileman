@@ -1,6 +1,18 @@
 jQuery(document).ready(function() {
 
-	var currentGridRowId;
+var currentGridRowId;
+
+	//
+	//	Init sort direct highlight
+	//
+	var direction = /&direction=(ASC|DESC)/.exec(location.href);
+	var sort = /&sort=([a-z]+)/.exec(location.href);
+		
+	if (direction != null && sort != null) {
+		var th = jQuery("table thead th[field=" + sort[1] + "]");
+		var iconClass = (direction[1] == "DESC") ? "icon-arrow-down" : "icon-arrow-up";		
+		jQuery(th).find("a").append("&nbsp;<i class=\"" + iconClass + "\"></i>");
+	}
 
 	// 
 	// Init tree loader

@@ -16,12 +16,23 @@
 <table id="table" class="table table-striped table-bordered table-condensed">
 	<thead>
 		<tr>
-			<th class="center"><input type="checkbox" name="checkAll" title="Выделить все / Снять выделение" /></th>			
-			<th><a href="#"><i class="icon icon-arrow-up hidden"></i>Название</a></th>
-			<th><a href="#"><i class="icon icon-arrow-up hidden"></i>Дата&nbsp;изменения</a></th>
-			<th><a href="#"><i class="icon icon-arrow-up hidden"></i>Размер&nbsp;(байты)</a></th>
-			<th><a href="#"><i class="icon icon-arrow-up hidden"></i>Тип</a></th>
-			<th><a href="#"><i class="icon icon-arrow-up hidden"></i>Права</a></th>
+			<th class="center"><input type="checkbox" name="checkAll" title="Выделить все / Снять выделение" /></th>
+			<?php 
+				$_GET['sort'] = 'label';
+				if (isset($_GET['direction'])) {
+					if ($_GET['direction'] == 'DESC') $_GET['direction'] = 'ASC'; else $_GET['direction'] = 'DESC';
+				} else {
+					$_GET['direction'] = 'DESC';
+				}
+			?>
+			<th field="label"><a href="<?php echo $this->createUrl('fileman/index', $_GET); ?>"><i class="icon icon-arrow-up hidden"></i>Название</a></th>
+			<?php $_GET['sort'] = 'filetime'?>
+			<th field="filetime"><a href="<?php echo $this->createUrl('fileman/index', $_GET); ?>"><i class="icon icon-arrow-up hidden"></i>Дата&nbsp;изменения</a></th>
+			<?php $_GET['sort'] = 'intsize'?>
+			<th field="intsize"><a href="<?php echo $this->createUrl('fileman/index', $_GET ); ?>"><i class="icon icon-arrow-up hidden"></i>Размер&nbsp;(байты)</a></th>
+			<?php $_GET['sort'] = 'extension'?>
+			<th field="extension"><a href="<?php echo $this->createUrl('fileman/index', $_GET); ?>"><i class="icon icon-arrow-up hidden"></i>Тип</a></th>
+			<th><i class="icon icon-arrow-up hidden"></i>Права</a></th>
 			<th>Упр.</th>
 		</tr>
 	</thead>

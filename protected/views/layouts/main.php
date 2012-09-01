@@ -29,7 +29,6 @@
 			var urlAjaxTree = "<?php echo $this->createUrl('ajaxTree'); ?>";
 			var urlZip = "<?php echo $this->createUrl("zip"); ?>";
 			var urlDownload = "<?php echo $this->createUrl("download"); ?>";
-			
 		</script>
 	</head>
 	<body>

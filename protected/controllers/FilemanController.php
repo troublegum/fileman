@@ -29,7 +29,8 @@ class FilemanController extends CController
 			$path = $item;
 			$isLink = is_link($path);
 			$dateTimeFormat = $app->params['dateTimeFormat'];
-			$modificationDateTime = $app->dateFormatter->format($dateTimeFormat, @filemtime($path));
+			$filetime = @filemtime($path);
+			$modificationDateTime = $app->dateFormatter->format($dateTimeFormat, $filetime);
 			$permissions = @fileperms($path);
 			if ($permissions === false) {
 				$permissions = 'N/A';
@@ -44,7 +45,9 @@ class FilemanController extends CController
 					'path' => $path,
 					'label' => $label,
 					'modificationDateTime' => $modificationDateTime,
+					'filetime' => $filetime,
 					'size' => '-',
+					'intsize' => 0,
 					'permissions' => $permissions,
 					'extension' => '-',
 					'url' => $this->createUrl($this->route, array('dir' => $path))
@@ -52,8 +55,10 @@ class FilemanController extends CController
 			} else {
 				$size = @filesize($item);
 				if ($size === false) {
+					$intsize = 0;
 					$size = 'N/A';
 				} else {
+					$intsize = $size;
 					$size = number_format($size, 0, ' ', ' ');
 				}
 				$extension = FileHelper::getExtension($path);
@@ -64,17 +69,25 @@ class FilemanController extends CController
 					'path' => $path, 
 					'label' => $label,
 					'modificationDateTime' => $modificationDateTime,
+					'filetime' => $filetime,
 					'size' => $size,
+					'intsize' => $intsize,
 					'permissions' => $permissions,
 					'extension' => $extension,
 				);
 			}
-		}	
+		}
 		
+		// Сортировка таблицы
+		if (isset($_GET['sort']) && isset($_GET['direction'])) {
+			$data = $this->sortData($data, $_GET['sort'], $_GET['direction']);
+		}
+
 		$provider = new CArrayDataProvider($data, array('pagination' => array('pageSize' => 25)));
 		$list = $provider->data;
 		$upDir = dirname($dir) . DIRECTORY_SEPARATOR;
 		array_unshift($list, array('type' => 'up', 'path' => $upDir, 'label' => '..', 'url' => $this->createUrl($this->route, array('dir' => $upDir))));
+		
 		$this->render('index', array('list' => $list, 'pagination' => $provider->pagination, 'dir' => $dir));
 	}
 	
@@ -461,5 +474,39 @@ class FilemanController extends CController
 			$path .=  DIRECTORY_SEPARATOR;
 		}
 		return $path;
+	}
+	
+	protected function sortData($data, $sort, $direction = 'ASC')
+	{
+		$dirs = $files = array();
+		foreach ($data as $item) {
+			if ($item['type'] == 'dir') {
+				$dirs[] = $item;
+			} else {
+				$files[] = $item;
+			}
+		}		
+		$dirs = $this->sort($dirs, $sort, $direction);
+		$files = $this->sort($files, $sort, $direction);
+		return array_merge($dirs, $files);
+	}
+	
+	protected function sort($data, $sort, $direction)
+	{
+		$list = array();
+		foreach ($data as $i => $value) {
+			$list[$i] = $value[$sort];
+		}		
+		if ($direction == 'ASC') {
+			asort($list);
+		} else {
+			arsort($list);
+		}		
+		$keys = array_keys($list);		
+		$sortdata = array();
+		foreach ($keys as $key) {
+			$sortdata[] = $data[$key];
+		}
+		return $sortdata;
 	}
 }
