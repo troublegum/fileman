@@ -488,7 +488,11 @@ class FilemanController extends CController
 		}		
 		$dirs = $this->sort($dirs, $sort, $direction);
 		$files = $this->sort($files, $sort, $direction);
-		return array_merge($dirs, $files);
+		if ($direction == 'ASC') {
+			return array_merge($dirs, $files);
+		} else {
+			return array_merge($files, $dirs);
+		}
 	}
 	
 	protected function sort($data, $sort, $direction)
