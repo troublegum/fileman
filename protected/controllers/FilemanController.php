@@ -4,7 +4,7 @@
  * SiteController
  * 
  * @author Сергей
- * @package your package name
+ * @package FileMan
  * @version 0.9
  */
 
@@ -88,7 +88,22 @@ class FilemanController extends CController
 		$upDir = dirname($dir) . DIRECTORY_SEPARATOR;
 		array_unshift($list, array('type' => 'up', 'path' => $upDir, 'label' => '..', 'url' => $this->createUrl($this->route, array('dir' => $upDir))));
 		
-		$this->render('index', array('list' => $list, 'pagination' => $provider->pagination, 'dir' => $dir));
+		// Создаем путь (хлебные крошки)
+		$currDir = rtrim($this->getCurrentDir(), '\\/');
+		$currExplodedDir = preg_split('#\\\\|/#', $currDir);
+		if (isset($currExplodedDir[0]) && $currExplodedDir[0] == '') $currExplodedDir[0] = DIRECTORY_SEPARATOR; //FIX для UNIX
+		$path = array();
+		$url = '';
+		foreach ($currExplodedDir as $value) {
+			if ($value != DIRECTORY_SEPARATOR) {
+				$url .= ($value . DIRECTORY_SEPARATOR);
+			} else {
+				$url = DIRECTORY_SEPARATOR;
+			}
+			$path[] = array('text' => $value, 'url' => $url);
+		}
+		
+		$this->render('index', array('list' => $list, 'pagination' => $provider->pagination, 'dir' => $dir, 'path' => $path));
 	}
 	
 	//+

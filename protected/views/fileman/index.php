@@ -1,4 +1,12 @@
-<h3><?php echo CHtml::encode($this->getCurrentDir()); ?></h3>
+<h3><?php 
+	$pathSize = count($path);
+	$index = 1;
+	foreach ($path as $value) {
+		echo '<a href="' . $this->createUrl($this->route) . '?dir=' . urlencode($value['url']) . '">' . $value['text'] . '</a>';				
+		if ($index < $pathSize) echo ' / ';
+		$index++;
+	}
+?></h3>
 <!-- 
 	#
 	#	Control buttons
