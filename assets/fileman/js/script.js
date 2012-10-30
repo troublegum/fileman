@@ -20,7 +20,7 @@ var currentGridRowId;
 	jQuery("a[href=#tree-load]").click(function(e) {
 		var dialogId = jQuery(e.target).parents("div.modal").attr("id");
 		jQuery("#" +  dialogId).find(".fileTree").fileTree({
-			root: rootDir,
+			root: currentDir,
 			script: urlAjaxTree,
 			folderEvent: "click"
 		});		
