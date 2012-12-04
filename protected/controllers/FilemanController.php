@@ -83,7 +83,7 @@ class FilemanController extends CController
 			$data = $this->sortData($data, $_GET['sort'], $_GET['direction']);
 		}
 
-		$provider = new CArrayDataProvider($data, array('pagination' => array('pageSize' => 25)));
+		$provider = new CArrayDataProvider($data, array('pagination' => array('pageSize' => Yii::app()->params->itemsOnPage)));
 		$list = $provider->data;
 		$upDir = dirname($dir) . DIRECTORY_SEPARATOR;
 		array_unshift($list, array('type' => 'up', 'path' => $upDir, 'label' => '..', 'url' => $this->createUrl($this->route, array('dir' => $upDir))));
