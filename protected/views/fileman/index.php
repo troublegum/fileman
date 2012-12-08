@@ -26,20 +26,21 @@
 		<tr>
 			<th class="center"><input type="checkbox" name="checkAll" title="Выделить все / Снять выделение" /></th>
 			<?php 
-				$_GET['sort'] = 'label';
-				if (isset($_GET['direction'])) {
-					if ($_GET['direction'] == 'DESC') $_GET['direction'] = 'ASC'; else $_GET['direction'] = 'DESC';
+				$getParams = $_GET;
+				$getParams['sort'] = 'label';
+				if (isset($getParams['direction'])) {
+					if ($getParams['direction'] == 'DESC') $getParams['direction'] = 'ASC'; else $getParams['direction'] = 'DESC';
 				} else {
-					$_GET['direction'] = 'DESC';
+					$getParams['direction'] = 'DESC';
 				}
 			?>
-			<th field="label"><a href="<?php echo $this->createUrl('fileman/index', $_GET); ?>"><i class="icon icon-arrow-up hidden"></i>Название</a></th>
-			<?php $_GET['sort'] = 'filetime'?>
-			<th field="filetime"><a href="<?php echo $this->createUrl('fileman/index', $_GET); ?>"><i class="icon icon-arrow-up hidden"></i>Дата&nbsp;изменения</a></th>
-			<?php $_GET['sort'] = 'intsize'?>
-			<th field="intsize"><a href="<?php echo $this->createUrl('fileman/index', $_GET ); ?>"><i class="icon icon-arrow-up hidden"></i>Размер&nbsp;(байты)</a></th>
-			<?php $_GET['sort'] = 'extension'?>
-			<th field="extension"><a href="<?php echo $this->createUrl('fileman/index', $_GET); ?>"><i class="icon icon-arrow-up hidden"></i>Тип</a></th>
+			<th field="label"><a href="<?php echo $this->createUrl('fileman/index', $getParams); ?>"><i class="icon icon-arrow-up hidden"></i>Название</a></th>
+			<?php $getParams['sort'] = 'filetime'?>
+			<th field="filetime"><a href="<?php echo $this->createUrl('fileman/index', $getParams); ?>"><i class="icon icon-arrow-up hidden"></i>Дата&nbsp;изменения</a></th>
+			<?php $getParams['sort'] = 'intsize'?>
+			<th field="intsize"><a href="<?php echo $this->createUrl('fileman/index', $getParams); ?>"><i class="icon icon-arrow-up hidden"></i>Размер&nbsp;(байты)</a></th>
+			<?php $getParams['sort'] = 'extension'?>
+			<th field="extension"><a href="<?php echo $this->createUrl('fileman/index', $getParams); ?>"><i class="icon icon-arrow-up hidden"></i>Тип</a></th>
 			<th><i class="icon icon-arrow-up hidden"></i>Права</a></th>
 			<th>Упр.</th>
 		</tr>
