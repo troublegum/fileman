@@ -99,7 +99,8 @@
 			</div>
 			<div class="modal-body">
 				<p><b><?php echo $app->name; ?></b> v<?php echo FILEMAN_VERSION; ?></p>
-				<p><?php echo $app->name; ?> on GitHub <a href="https://github.com/troublegum/fileman" targrt="_blank">https://github.com/troublegum/fileman</a></p>
+				<p>Страница проекта <?php echo $app->name; ?>: <a href="http://blog-programmista.ru/projects.html?reffer=<?php echo $_SERVER['SERVER_NAME'] ?>#fileman" targrt="_blank">http://blog-programmista.ru/projects.html#fileman</a></p>
+				<p>Сообщить об ошибке: <a href="mailto:fileman-bugreport@blog-programmista.ru">fileman-bugreport@blog-programmista.ru</a></p>
 			</div>
 		</div>
 	</body>

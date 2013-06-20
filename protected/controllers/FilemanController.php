@@ -471,6 +471,11 @@ class FilemanController extends CController
 		}
 	}
 	
+	public function actionForbidden()
+	{
+		$this->render('forbidden');
+	}
+	
 	protected function getCurrentDir()
 	{
 		$app = Yii::app();
@@ -485,9 +490,10 @@ class FilemanController extends CController
 	
 	public function normalizeDirPath($path)
 	{
+		$path = preg_replace('#[\\\\/]#', DIRECTORY_SEPARATOR, $path);
 		if (!preg_match('#[\\\\/]$#', $path)) {
 			$path .=  DIRECTORY_SEPARATOR;
-		}
+		}		
 		return $path;
 	}
 	
@@ -527,5 +533,33 @@ class FilemanController extends CController
 			$sortdata[] = $data[$key];
 		}
 		return $sortdata;
+	}
+	
+	public function filters()
+	{
+		return array(
+			'dirAccessControl'
+		);
+	}
+	
+	public function filterDirAccessControl($filterChain)
+	{
+		$forbbidenDirs = Yii::app()->params['forbiddenDirs'];
+		if ($forbbidenDirs) {
+			$arrForbbidenDirs = preg_split('/\n/', $forbbidenDirs);
+			if (!is_array($arrForbbidenDirs)) $arrForbbidenDirs = array($arrForbbidenDirs);
+			$currDir = $this->normalizeDirPath($this->getCurrentDir());
+			foreach ($arrForbbidenDirs as $i => $dir) {
+				if (DIRECTORY_SEPARATOR == '\\') {
+					$dir = preg_replace('#\\\\#', '\\\\\\', $dir);
+				}
+				if (preg_match("#^$dir#", $currDir)) {
+					Yii::app()->user->setFlash('error', 'Доступ к директории вида "' . htmlspecialchars($arrForbbidenDirs[$i]) . '" запрещен!');
+					$this->redirect(array('forbidden'));
+					Yii::app()->end();
+				}
+			}
+		}
+		$filterChain->run();
 	}
 }

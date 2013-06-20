@@ -15,6 +15,7 @@ class Settings extends CFormModel
 	public $dirPermissions;
 	public $filePermissions;
 	public $itemsOnPage;
+	public $forbiddenDirs;
 	
 	public function init()
 	{
@@ -28,7 +29,8 @@ class Settings extends CFormModel
 			'dateTimeFormat' => 'Формат даты и времени',
 			'dirPermissions' => 'Права по умолчанию для папки',
 			'filePermissions' => 'Права по умолчанию для файла',
-			'itemsOnPage' => 'Кол-во строк в таблице'
+			'itemsOnPage' => 'Кол-во строк в таблице',
+			'forbiddenDirs' => 'Список директорий доступ к которым запрещен'
  		);
 	}
 	
@@ -36,7 +38,7 @@ class Settings extends CFormModel
 	{
 		return array(
 			array('dateTimeFormat, dirPermissions, filePermissions, itemsOnPage', 'required'),
-			array('rootDir', 'safe'),			
+			array('rootDir, forbiddenDirs', 'safe'),			
 			array('itemsOnPage', 'type', 'type' => 'integer')
 		);
 	}

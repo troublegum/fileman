@@ -25,6 +25,12 @@
 		<?php echo $form->textField($model, 'itemsOnPage'); ?>
 		<?php echo $form->error($model, 'itemsOnPage'); ?>
 	</div>
+		<div class="form-row">
+		<?php echo $form->labelEx($model, 'forbiddenDirs'); ?>
+		<?php echo $form->textArea($model, 'forbiddenDirs'); ?>
+		<div><small>По одной директории на строке.</small></div>
+		<?php echo $form->error($model, 'forbiddenDirs'); ?>
+	</div>	
 	<div class="form-row-last">
 		<?php echo CHtml::submitButton('Сохранить', array('class' => 'btn')); ?>
 	</div>	

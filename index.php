@@ -1,4 +1,5 @@
 <?php
+define('YII_DEBUG', false);
 setlocale(LC_ALL, 'ru_RU.UTF-8');
 set_time_limit(60 * 60);
 require_once dirname(__FILE__) . '/yii/yii.php';
