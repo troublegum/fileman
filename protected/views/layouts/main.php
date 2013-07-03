@@ -79,6 +79,11 @@
 						<?php echo $app->user->getFlash('success'); ?>
 					</div>
 				<?php endif; ?>
+				<?php if ($this->isOsWindows()):?>
+					<div class="alert">
+						<strong>Предупреждение:</strong> Вы работаете под управлением ОС Windows, работа с кириллическими названиями файлов и папок не поддерживается!
+					</div>
+				<?php endif; ?>
 				<!-- 
 					#
 					#	Content

@@ -270,8 +270,9 @@ var currentGridRowId;
 
 	function appendCheckedFilesToForm(formId, files) {
 		for (var key in files) {
-			var htmlInput = "<input type='hidden' value='" + files[key] + "' name='files[" + key + "]' />";
+			var htmlInput = "<input type='hidden' name=\"files[" + key + "]\" id='sending-files-n-" + key + "' />\n";
 			jQuery(formId).append(htmlInput);
+			jQuery("#sending-files-n-" + key).val(files[key]);
 		}
 	}
 

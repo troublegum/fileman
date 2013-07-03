@@ -8,3 +8,4 @@
 Системные требования к FileMan:
 - PHP > 5.2
 - mod_rewrite
+- Linux

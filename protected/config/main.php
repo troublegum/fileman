@@ -12,6 +12,6 @@ return array(
 				'<_a:\w+>.php' => 'fileman/<_a>'
 			)
 		)
-	),
+	),	
 	'params' => require 'params.php'
 );

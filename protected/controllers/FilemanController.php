@@ -24,8 +24,10 @@ class FilemanController extends CController
 		}
 		
 		$data = array();
+		$isOsWindows = $this->isOsWindows();
 		foreach ($array as $item) {
 			$label = FileHelper::getBasename($item);
+			if ($isOsWindows) $label = $this->convertCp1251ToUtf8($label);
 			$path = $item;
 			$isLink = is_link($path);
 			$dateTimeFormat = $app->params['dateTimeFormat'];
@@ -57,6 +59,9 @@ class FilemanController extends CController
 				if ($size === false) {
 					$intsize = 0;
 					$size = 'N/A';
+				} else if ($size < 0) {
+					$intsize = 0;
+					$size = '> 1Гb';
 				} else {
 					$intsize = $size;
 					$size = number_format($size, 0, ' ', ' ');
@@ -273,7 +278,7 @@ class FilemanController extends CController
 	//+
 	public function actionCopy()
 	{
-		$app = Yii::app();
+		$app = Yii::app();		
 		$dir = dirname($_POST['source']);
 		$destination = $this->normalizeDirPath($_POST['destination']) . FileHelper::getBasename($_POST['source']);
 		
@@ -545,7 +550,8 @@ class FilemanController extends CController
 	public function filterDirAccessControl($filterChain)
 	{
 		$forbbidenDirs = Yii::app()->params['forbiddenDirs'];
-		if ($forbbidenDirs) {
+		$actionId = Yii::app()->controller->action->id;
+		if ($actionId != 'forbidden' && $actionId != 'settings' && $forbbidenDirs) {
 			$arrForbbidenDirs = preg_split('/\n/', $forbbidenDirs);
 			if (!is_array($arrForbbidenDirs)) $arrForbbidenDirs = array($arrForbbidenDirs);
 			$currDir = $this->normalizeDirPath($this->getCurrentDir());
@@ -561,5 +567,15 @@ class FilemanController extends CController
 			}
 		}
 		$filterChain->run();
+	}
+	
+	public function convertCp1251ToUtf8($str)
+	{
+		return iconv('windows-1251', 'utf-8', $str);
+	}
+	
+	protected function isOsWindows()
+	{
+		return (bool)stristr(PHP_OS, 'WIN'); 
 	}
 }

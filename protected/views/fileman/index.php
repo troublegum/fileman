@@ -1,8 +1,13 @@
+<!--
+	#
+	#	Breadcrumbs
+	#
+-->
 <h3><?php 
 	$pathSize = count($path);
 	$index = 1;
 	foreach ($path as $value) {
-		echo '<a href="' . $this->createUrl($this->route) . '?dir=' . urlencode($value['url']) . '">' . $value['text'] . '</a>';				
+		echo '<a href="' . $this->createUrl($this->route) . '?dir=' . urlencode($value['url']) . '">' . (($this->isOsWindows()) ? $this->convertCp1251ToUtf8($value['text']) : $value['text']) . '</a>';				
 		if ($index < $pathSize) echo ' / ';
 		$index++;
 	}

@@ -2,7 +2,6 @@ AddDefaultCharset utf-8
 Options +FollowSymLinks
 
 RewriteEngine on
-RewriteBase /
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-s
