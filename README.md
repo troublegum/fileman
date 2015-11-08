@@ -8,4 +8,4 @@ FileMan - это PHP скрипт файлового менеджера с уд�
  - запрещать доступ к опредленным директориям
 
 ---
-Обсуждение тут: http://blog-programmista.ru/blog/php_skript_faylovogo_menedjera_fileman.html
+Обсуждение тут: http://blog-programmista.ru/projects/fileman/
